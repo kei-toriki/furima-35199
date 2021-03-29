@@ -35,7 +35,7 @@
 ### Association
 
 - belongs_to :user
-- has_one    :buy
+- has_many   :buys
 
 ## buys テーブル
 
@@ -55,7 +55,7 @@
 | Column            | Type         | Options                        |
 | ------            | ----------   | ------------------------------ |
 | postal_code       | string       | null: false                    |
-| prefecture_id     | integer      | null: false                    |
+| area_id           | integer      | null: false                    |
 | municipalities    | string       | null: false                    |
 | address           | string       | null: false                    |
 | building          | string       |                                |
