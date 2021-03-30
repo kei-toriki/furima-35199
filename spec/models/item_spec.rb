@@ -29,27 +29,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Image can't be blank")
       end
       it 'category_idが1では登録できない' do
-        @item.category_id = '1'
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Category must be other than 1")
       end
       it 'status_idが1では登録できない' do
-        @item.status_id = '1'
+        @item.status_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Status must be other than 1")
       end
       it 'burden_idが1では登録できない' do
-        @item.burden_id = '1'
+        @item.burden_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Burden must be other than 1")
       end
       it 'area_idが1では登録できない' do
-        @item.area_id = '1'
+        @item.area_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Area must be other than 1")
       end
       it 'shipping_day_idが1では登録できない' do
-        @item.shipping_day_id = '1'
+        @item.shipping_day_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day must be other than 1")
       end
@@ -74,12 +74,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
       it 'priceは300円以下では登録できない' do
-        @item.price = '22'
+        @item.price = 22
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not included in the list")
       end
       it 'priceは9999999円以上では登録できない' do
-        @item.price = '111111111'
+        @item.price = 111111111
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not included in the list")
       end
