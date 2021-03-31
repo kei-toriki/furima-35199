@@ -4,8 +4,9 @@ class Item < ApplicationRecord
     validates :explanation
     validates :image
   end
-  
-  validates :price,  presence: true, numericality: {only_integer: true}, inclusion: { in: 300..9_999_999 }, format: { with: /\A[0-9]+\z/ }
+
+  validates :price, presence: true, numericality: { only_integer: true }, inclusion: { in: 300..9_999_999 },
+                    format: { with: /\A[0-9]+\z/ }
 
   belongs_to :user
   has_one_attached :image
