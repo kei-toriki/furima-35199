@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :sold_out_item, only: [:index, :create]
+   
   def index
     @item = Item.find(params[:item_id])
     @order_delivery = OrderDelivery.new
@@ -36,6 +37,13 @@ class OrdersController < ApplicationController
         card: order_params[:token],    
         currency: 'jpy'                 
       )
-    end
+  end
+
+  def sold_out_item
+    @item = Item.find(params[:item_id])
+    if @item.order.present?
+      redirect_to root_path
+    end 
+  end
 
 end
