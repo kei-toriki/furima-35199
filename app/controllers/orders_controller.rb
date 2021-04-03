@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
   before_action :sold_out_item, only: [:index, :create]
    
   def index
-    @item = Item.find(params[:item_id])
     @order_delivery = OrderDelivery.new
     @order = Order.new
     if current_user.id == @item.user.id
@@ -13,13 +13,11 @@ class OrdersController < ApplicationController
 
   def create
     @order_delivery = OrderDelivery.new(order_params)
-    @item = Item.find(params[:item_id])
     if @order_delivery.valid?
       pay_item
       @order_delivery.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -40,10 +38,13 @@ class OrdersController < ApplicationController
   end
 
   def sold_out_item
-    @item = Item.find(params[:item_id])
     if @item.order.present?
       redirect_to root_path
     end 
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
 end
