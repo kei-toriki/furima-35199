@@ -5,12 +5,16 @@ RSpec.describe OrderDelivery, type: :model do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
       @order_delivery = FactoryBot.build(:order_delivery, user_id: user.id, item_id: item.id)
-      sleep(0.2)
+      sleep(0.1)
     end
   
     describe '商品購入情報の保存' do
       context '内容に問題ない場合' do
         it 'すべての値が正しく入力されていれば保存できること' do
+          expect(@order_delivery).to be_valid
+        end
+        it 'buildingは空でも保存できること' do
+          @order_delivery.building = ''
           expect(@order_delivery).to be_valid
         end
       end
@@ -51,14 +55,25 @@ RSpec.describe OrderDelivery, type: :model do
           @order_delivery.valid?
           expect(@order_delivery.errors.full_messages).to include("Phone number is invalid")
         end
-        it 'buildingは空でも保存できること' do
-          @order_delivery.building = ''
-          expect(@order_delivery).to be_valid
+        it 'phone_number英数混合では保存できないこと' do
+          @order_delivery.phone_number = 'abv12341234'
+          @order_delivery.valid?
+          expect(@order_delivery.errors.full_messages).to include("Phone number is invalid")
         end
         it 'tekenが空だと保存できないこと' do
           @order_delivery.token = nil
           @order_delivery.valid?
           expect(@order_delivery.errors.full_messages).to include("Token can't be blank")
+        end
+        it 'user_idが空だと保存できないこと' do
+          @order_delivery.user_id = nil
+          @order_delivery.valid?
+          expect(@order_delivery.errors.full_messages).to include("User can't be blank")
+        end
+        it 'item_idが空だと保存できないこと' do
+          @order_delivery.item_id = nil
+          @order_delivery.valid?
+          expect(@order_delivery.errors.full_messages).to include("Item can't be blank")
         end
       end
     end
