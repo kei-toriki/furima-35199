@@ -6,9 +6,6 @@ class OrdersController < ApplicationController
   def index
     @order_delivery = OrderDelivery.new
     @order = Order.new
-    if current_user.id == @item.user.id
-      redirect_to root_path
-    end
   end
 
   def create
@@ -38,7 +35,7 @@ class OrdersController < ApplicationController
   end
 
   def sold_out_item
-    if @item.order.present?
+    if @item.order.present? || current_user.id == @item.user.id
       redirect_to root_path
     end 
   end
